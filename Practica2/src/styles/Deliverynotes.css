@@ -1,11 +1,8 @@
-/* DeliverynotesList.css */
-
-/* Contenedor de la lista */
 .Deliverynotes-list {
 @apply max-w-7xl mx-auto p-6 bg-gray-50;
 }
 
-/* Tabla de las notas de entrega */
+
 .Deliverynotes-table {
 @apply min-w-full table-auto bg-white shadow-md rounded-lg border-collapse;
 }
@@ -23,13 +20,13 @@
 @apply bg-gray-50;
 }
 
-/* Enlace dentro de la tabla */
+
 .deliverynote-link {
 @apply text-blue-600 hover:text-blue-800;
 text-decoration: none;
 }
 
-/* Estilos para las etiquetas de estado */
+
 .status-tag {
 @apply inline-block px-3 py-1 rounded-full text-sm font-medium;
 }
