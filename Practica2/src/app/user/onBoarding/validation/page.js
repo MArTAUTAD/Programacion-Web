@@ -1,62 +1,86 @@
 "use client";
 
 import FormYup from "@/components/FormYup";
-import { getFetch } from "@/utils/handlerequests"
+import { getFetch } from "@/utils/handlerequests";
 import { useState } from "react";
 import * as Yup from "yup";
 
-export default function validation(){
-
+export default function Validation({ onValidation }) {
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const [codeInputs, setCodeInputs] = useState(["", "", "", ""]);
 
-    const paramForm={
-        initialValues : {  code: "" },
+    // Maneja el cambio en cada input individual del código
+    const handleInputChange = (index, value) => {
+        if (!/^\d*$/.test(value)) return; // Permitir solo números
+        const newCodeInputs = [...codeInputs];
+        newCodeInputs[index] = value.slice(0, 1); // Solo un carácter por input
+        setCodeInputs(newCodeInputs);
 
-        fields :[
-        { name: "code", type: "text", label: "" },
-        ],
+        // Enfocar automáticamente el siguiente input
+        if (value && index < 3) {
+            const nextInput = document.getElementById(`code-input-${index + 1}`);
+            nextInput?.focus();
+        }
+    };
 
-        validationSchema :Yup.object({
-            code: Yup.string().length(4, "El código debe tener exactamente 4 dígitos").matches(/^\d+$/, "El código debe contener solo números").required()
-        }),
+    const handleSubmit = async () => {
+        const token = localStorage.getItem("jwt");
+        if (!token) {
+            setErrorMessage("No se encontró un token. Por favor, inicie sesión.");
+            return;
+        }
 
-        handleInputChange :(index, value) => {
-            const newCodeInputs = [...codeInputs];
-            newCodeInputs[index] = value.slice(0, 1); 
-            setCodeInputs(newCodeInputs);
-        },
+        // Combinar los inputs en un solo código
+        const code = codeInputs.join("");
 
-        handleSubmit :(values) => {
-            const token = localStorage.getItem("jwt");
-            if (!token) {
-                setErrorMessage("No se encontró un token. Por favor, inicie sesión.");
-                return;
-            }
-            try {
-                const data= getFetch("api/user/validation", codeInputs, "PUT", {"Authorization": `Bearer ${token}`});
-                setSuccessMessage("Correo verificado exitosamente.");
-                setErrorMessage("");
-              } catch (error) {
-                setSuccessMessage("");
-                setErrorMessage(error.message || "Error al verificar el correo.");
-              }
-        },
-    }
+        // Validar manualmente antes de enviar
+        if (code.length !== 4 || !/^\d+$/.test(code)) {
+            setErrorMessage("El código debe tener exactamente 4 dígitos numéricos.");
+            return;
+        }
 
-    
-    
+        try {
+            const data = await getFetch("api/user/validation", { code }, "PUT", {
+                Authorization: `Bearer ${token}`,
+            });
 
-    return(
-        <FormYup
-            paramsForm={paramForm}
-            formData={codeInputs}
-            setFormData={setCodeInputs}
-            buttonText="Verificar"
-        
-        ></FormYup>
-    )
+            setSuccessMessage("Correo verificado exitosamente.");
+            setErrorMessage("");
+        } catch (error) {
+            setSuccessMessage("");
+            setErrorMessage(error.message || "Error al verificar el correo.");
+        }
+    };
 
+    return (
+        <div>
+            <h2>Validar Código</h2>
+            <div style={{ display: "flex", gap: "10px" }}>
+                {codeInputs.map((value, index) => (
+                    <input
+                        key={index}
+                        id={`code-input-${index}`}
+                        type="text"
+                        maxLength="1"
+                        value={value}
+                        onChange={(e) => handleInputChange(index, e.target.value)}
+                        style={{
+                            width: "40px",
+                            height: "40px",
+                            textAlign: "center",
+                            fontSize: "18px",
+                        }}
+                    />
+                ))}
+            </div>
+            <button onClick={handleSubmit} style={{ marginTop: "20px" }}>
+                Validar código
+            </button>
+
+            {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        </div>
+    );
 }
