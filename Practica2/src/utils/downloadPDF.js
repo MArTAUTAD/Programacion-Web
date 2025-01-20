@@ -2,7 +2,7 @@ import { getFetch } from "./handlerequests";
 
 async function downloadPDF(deliveryNoteId) {
     try {
-        const token = localStorage.getItem("jwt"); // Obtener el token del almacenamiento local
+        const token = localStorage.getItem("jwt"); 
         const blob = await getFetch(`api/deliverynote/pdf/${deliveryNoteId}`, null, "GET", {
             "Authorization": `Bearer ${token}`
         });
