@@ -1,12 +1,11 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Register from "./user/onBoarding/register/page";
-import Clients from "./pages/clients/page";
+import Clients from "./pagesInfo/clients/page";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
 
-import { useRouter } from 'next/router';
 
 
 const geistSans = localFont({
@@ -26,16 +25,10 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const router = useRouter();
   return (
     <html lang="en">
       <body>
-        {/* <Register></Register> */}
-        {/* <Clients></Clients> */}
-        <Header></Header>
-        <Sidebar></Sidebar>
         <main>{children}</main>
-        <Footer></Footer>
       </body>
     </html>
   );
