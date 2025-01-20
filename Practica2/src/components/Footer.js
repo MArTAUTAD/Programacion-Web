@@ -1,7 +1,8 @@
 // Pie de página
-export default function Footer (){
+import "@/styles/footer.css"
+export default function Footer() {
   return (
-    <footer >
+    <footer className="footer">
       <p>&copy; 2024 Mi Aplicación</p>
     </footer>
   );
