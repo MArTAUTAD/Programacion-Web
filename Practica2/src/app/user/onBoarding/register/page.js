@@ -6,13 +6,13 @@ import { useState } from "react";
 import * as Yup from "yup";
 import '@/styles/onboarding.css'
 
-export default function Register(){
+export default function Register({onRegister,onLoginClick}){
     const [formData, setFormData] = useState({firstName: "",lastName: "",email: "", password: "",});
-    const data= getFetch("api/user/register", formData, "POST");
+    // const data= getFetch("api/user/register", formData, "POST");
     
 
     const paramForm={
-      initialValues : { username: "", password: "" },
+      initialValues: { ...formData },
       fields : [
       { name: "firstName", type: "text", label: "Nombre del Usuario" },
       { name: "lastName", type: "text", label: "Apellido del Usuario" },
@@ -27,11 +27,35 @@ export default function Register(){
         password: Yup.string().min(8, 'minimo 8 caracteres').max(30, 'maximo 30 caracteres').required()
       }),
 
-      handleSubmit : (values) => {
-        console.log("Formulario Enviado:", values);
-        console.log("Estado Local formData:", formData);
+    
+      handleSubmit : async (values) => {
+        try {
+            console.log("Formulario Enviado:", values);
+            const { email, password } = values;
+
+            
+            const blob = await getFetch("api/user/register", { email, password }, "POST", null);
+
+            
+            const text = await blob.text();
+            const data = JSON.parse(text);
+
+            
+            if (data && data.token) {
+                localStorage.setItem("jwt", data.token);
+                console.log("Usuario registrado exitosamente. Token almacenado:", data.token);
+            } else {
+                console.error("Error: No se recibió un token válido.");
+            }
+        } catch (error) {
+            console.error("Error en el registro:", error.message);
+        }
       },
-  
+    }
+
+    const infoButton={
+      button1:{onclick:onLoginClick, text:"Ya tengo cuenta"},
+      button2:{onclick:onRegister,  text:"Regístrese con correo electrónico"},
     }
 
     
@@ -43,7 +67,9 @@ export default function Register(){
         paramsForm={paramForm}
         formData={formData}
         setFormData={setFormData}
-        buttonText="Regístrese con correo electrónico"
+        linkButton={infoButton.button1}
+        buttonForm={infoButton.button2}
+        
       ></FormYup>
     </div>
     
