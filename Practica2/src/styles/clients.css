@@ -1,0 +1,57 @@
+/* Contenedor principal de la lista de clientes */
+.clients-container {
+  @apply p-6 bg-white rounded-lg shadow-lg space-y-6;
+}
+
+/* Estilo para el texto de carga */
+.loading-text {
+  @apply text-center text-lg font-semibold text-gray-500;
+}
+
+/* Estilo para el mensaje de error */
+.error-message {
+  @apply text-center text-red-500 font-medium p-4 bg-red-100 rounded border border-red-300;
+}
+
+/* Contenedor para cuando no hay clientes */
+.no-clients-container {
+  @apply text-center p-8 bg-yellow-50 rounded-lg border border-yellow-200 space-y-4;
+}
+
+/* Estilos para el encabezado cuando no hay clientes */
+.no-clients-heading {
+  @apply text-2xl font-semibold text-gray-700;
+}
+
+/* Subtítulo cuando no hay clientes */
+.no-clients-subheading {
+  @apply text-lg text-gray-600;
+}
+
+/* Botón CTA */
+.cta-button {
+  @apply bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-300;
+}
+
+
+
+
+/* .no-clients {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .no-clients button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .no-clients button:hover {
+    background-color: #005bb5;
+  }
+   */

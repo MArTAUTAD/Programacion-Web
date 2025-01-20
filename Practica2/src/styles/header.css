@@ -1,0 +1,36 @@
+/* Estilos para el cabecero */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f1f1f1;
+  }
+  
+  /* Estilo para el título */
+  .title {
+    margin: 0;
+  }
+  
+  /* Estilo para la barra de búsqueda */
+  .searchBar {
+    padding: 8px;
+    width: 300px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Estilo para el perfil */
+  .profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Estilo para la imagen de perfil */
+  .profileImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
