@@ -2,18 +2,18 @@
 .page-layout {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Hace que el layout ocupe toda la altura de la ventana */
+    height: 100vh; /
   }
   
 
-  /* Contenedor que envuelve Sidebar y main */
+  /* Contenedor  Sidebar*/
   .layout-content {
     display: flex;
-    flex: 1; /* Toma todo el espacio disponible */
+    flex: 1; 
   }
   
 
-  /* Contenido principal que ocupa el espacio restante */
+  /* Contenido principal espacio restante */
   .main-content {
     flex: 1;
     padding: 20px;
