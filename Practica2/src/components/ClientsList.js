@@ -1,4 +1,4 @@
-export default ClientList ({ clients }) {
+export default function ClientList ({ clients }) {
   async function handleDelete(id) {
     const confirmDelete = confirm(
       `¿Estás seguro de que deseas eliminar el cliente con ID: ${id}?`
