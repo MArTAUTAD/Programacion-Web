@@ -21,7 +21,7 @@ export default function Home() {
   }, []);
 
   const handleLogin = (newToken) => {
-    TokenService.setToken(newToken); 
+    //TokenService.setToken(newToken); 
     setView("pages");
   };
 
